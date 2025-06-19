@@ -1,0 +1,71 @@
+body {
+  background-color: #222222;
+  font-family: "Inter", sans-serif;
+}
+.component {
+  max-width: 1442px;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 55px 0;
+}
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 105px;
+}
+.header {
+  & > .header-content {
+    background-color: #777777;
+    color: #ffffff;
+    max-width: 1442px;
+    height: 132px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    font-weight: 400;
+    font-size: 96px;
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+}
+.reviews-items {
+  display: flex;
+  justify-content: center;
+  gap: 34px;
+  min-height: 749px;
+  & > .reviews-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 27px;
+    background-color: #d9d9d9;
+    width: 468px;
+    height: 611px;
+    border-radius: 15px;
+    & > h1 {
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 100%;
+      letter-spacing: 0%;
+    }
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: 33px;
+      & > h1 {
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 100%;
+        letter-spacing: 0%;
+      }
+      & > p {
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 100%;
+        letter-spacing: 0%;
+      }
+    }
+  }
+}
