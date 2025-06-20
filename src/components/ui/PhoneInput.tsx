@@ -16,7 +16,6 @@ const PhoneInput = ({
       maskRef.current = IMask(inputRef.current, {
         mask: "+{7} (000) 000-00-00",
       });
-
       maskRef.current.on("accept", () => {
         if (maskRef.current) {
           onChange(maskRef.current.unmaskedValue);
@@ -37,7 +36,7 @@ const PhoneInput = ({
     <input
       ref={inputRef}
       type="tel"
-      placeholder="Телефон"
+      placeholder="+7 (___) ___-__-__"
       className="phone-input"
     />
   );

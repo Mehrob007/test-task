@@ -2,6 +2,7 @@ import Header from "@/components/ui/Header";
 import ReviewsItems from "@/modules/reviews/ReviewsItems";
 import Basket from "@/modules/basket/Basket";
 import React from "react";
+import ProductsItems from "@/modules/products/ProductsItems";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Header />
       <ReviewsItems />
       <Basket />
+      <ProductsItems />
     </div>
   );
 }
