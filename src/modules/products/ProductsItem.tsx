@@ -17,7 +17,6 @@ export default function ProductsItem({
   countProduct: (id: number, quantity: number) => void;
   dataBasket: FormDataBasketCart[];
 }) {
-  console.log("item.image_url", item.image_url);
   const [input, setInput] = useState<number>(1);
 
   const quantity = dataBasket?.find((e) => e.id === item.id)?.quantity;

@@ -5,13 +5,16 @@ import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import { productsService } from "@/api/products";
 import type { ProductsItemType } from "@/types/products";
-import { globalState } from "@/stor/globalState";
+import { useGlobalStore } from "@/stor/globalState";
 
 export default function ProductsItems() {
-  const [data, setData] = useState<ProductsItemType[] | null>(null);
+  const [data, setData] = useState<ProductsItemType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const { dataBasket, setDataBasket } = globalState();
+  const { dataBasket, setDataBasket } = useGlobalStore();
+  const [page, setPage] = useState<number>(1);
+  const [fetching, setFetching] = useState<boolean>(true);
+  const [hasMore] = useState(true);
 
   const add = (id: number) => {
     if (!data) return;
@@ -28,7 +31,15 @@ export default function ProductsItems() {
         }),
       );
     } else if (itemData) {
-      setDataBasket([...dataBasket, { id: itemData.id || 0, quantity: 1 }]);
+      setDataBasket([
+        ...dataBasket,
+        {
+          title: itemData.title,
+          price: itemData.price,
+          id: itemData.id || 0,
+          quantity: 1,
+        },
+      ]);
     }
   };
 
@@ -65,12 +76,14 @@ export default function ProductsItems() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setTimeout(() => setFetching(false), 1000);
+      setPage((page) => page && page + 1);
       try {
         setLoading(true);
-        const data = await productsService.getAllProducts(1, 20);
-        console.log("data", data);
+        const dataRes = await productsService.getAllProducts(page, 20);
+        console.log("data", dataRes);
 
-        setData(data.items);
+        setData((data) => [...data, ...dataRes.items]);
       } catch (e) {
         setError("Не удалось получить данные о  продуктах.");
         console.error(e);
@@ -78,19 +91,29 @@ export default function ProductsItems() {
         setLoading(false);
       }
     };
-    fetchData();
-  }, []);
+    if (fetching) {
+      fetchData();
+    }
+  }, [fetching]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("basket");
-    if (saved) setData(JSON.parse(saved));
-  }, []);
+    const handleScroll = () => {
+      if (loading || !hasMore) return;
 
-  console.log("dataBasket", dataBasket);
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const fullHeight = document.body.scrollHeight;
 
-  if (loading) {
-    return <Loading />;
-  }
+      if (scrollTop + windowHeight >= fullHeight - 100) {
+        setFetching(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading, hasMore]);
+
   if (error.length) {
     return <Error message={error} />;
   }
@@ -110,6 +133,7 @@ export default function ProductsItems() {
             />
           ))
         : ""}
+      {loading && <Loading />}
     </div>
   );
 }
