@@ -5,6 +5,7 @@ import type { Basket, FormDataBasket } from "@/types/basket";
 import { basketService } from "@/api/basket";
 import PhoneInput from "@/components/ui/PhoneInput";
 import { useGlobalStore } from "@/stor/globalState";
+import Popap from "@/components/ui/Popap";
 
 export default function Basket() {
   const [data, setData] = useState<Basket[] | null>(null);
@@ -12,8 +13,9 @@ export default function Basket() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const { dataBasket, setDataBasket } = useGlobalStore();
+  const [popapOpen, setPopapOpen] = useState<boolean>(false);
 
-  const tel = localStorage.getItem("tel");
+  const tel: string | null = localStorage.getItem("tel");
 
   const validata = () => {
     let error: string = "";
@@ -24,8 +26,6 @@ export default function Basket() {
     } else if (!data?.length) {
       error = "Нужно выбрать товар!";
     }
-
-    console.log("error", error);
 
     if (!error.length) {
       setError("");
@@ -43,11 +43,11 @@ export default function Basket() {
     try {
       if (!data) return;
       setLoading(true);
-      const res = await basketService.postOrder({
+      await basketService.postOrder({
         ...formData,
         cart: data.map((e) => ({ id: e.id, quantity: e.quantity })),
       });
-      console.log("post order", res);
+      setTimeout(() => setPopapOpen(true), 0);
     } catch (err) {
       setError("Не удалось получить данные отзывов.");
       console.error(err);
@@ -86,9 +86,6 @@ export default function Basket() {
       setFormData((prev) => ({ ...prev, phone: tel }));
     }
   }, []);
-
-  console.log("data", data);
-
   return (
     <div className={`basket ${loading ? "loading-div" : ""}`}>
       <h1>Добавленные товары</h1>
@@ -103,6 +100,7 @@ export default function Basket() {
         </div>
         <p>{error}</p>
       </div>
+      {popapOpen && <Popap cloas={() => setPopapOpen(false)} />}
     </div>
   );
 }

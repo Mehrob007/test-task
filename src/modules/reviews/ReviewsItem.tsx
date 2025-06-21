@@ -1,5 +1,6 @@
 import React from "react";
 import { Reviews } from "@/types/reviews";
+import ReviewHtmlTag from "./ReviewHtmlTag";
 
 export default function ReviewsItem({
   item,
@@ -11,7 +12,7 @@ export default function ReviewsItem({
   return (
     <div className="reviews-item">
       <h1>Отзыв {index + 1}</h1>
-      <div dangerouslySetInnerHTML={{ __html: item.text }} />
-    </div>  
+      <ReviewHtmlTag htmlString={item.text} />
+    </div>
   );
 }

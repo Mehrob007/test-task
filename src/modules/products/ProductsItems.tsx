@@ -81,8 +81,6 @@ export default function ProductsItems() {
       try {
         setLoading(true);
         const dataRes = await productsService.getAllProducts(page, 20);
-        console.log("data", dataRes);
-
         setData((data) => [...data, ...dataRes.items]);
       } catch (e) {
         setError("Не удалось получить данные о  продуктах.");
