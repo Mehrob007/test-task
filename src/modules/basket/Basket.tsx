@@ -4,7 +4,7 @@ import BasketItems from "./BasketItems";
 import type { Basket, FormDataBasket } from "@/types/basket";
 import { basketService } from "@/api/basket";
 import PhoneInput from "@/components/ui/PhoneInput";
-import { useGlobalStore } from "@/stor/globalState";
+import { useGlobalStore } from "@/store/globalState";
 import Popap from "@/components/ui/Popap";
 
 export default function Basket() {

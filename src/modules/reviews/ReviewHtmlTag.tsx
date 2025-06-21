@@ -2,7 +2,7 @@
 "use client";
 
 import { useMemo } from "react";
-import DOMPurify from "../../lib/purifyClient";
+import DOMPurify from "../../api/purifyClient";
 
 interface Props {
   htmlString?: string | null;

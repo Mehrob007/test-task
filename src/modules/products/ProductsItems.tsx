@@ -5,7 +5,7 @@ import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import { productsService } from "@/api/products";
 import type { ProductsItemType } from "@/types/products";
-import { useGlobalStore } from "@/stor/globalState";
+import { useGlobalStore } from "@/store/globalState";
 
 export default function ProductsItems() {
   const [data, setData] = useState<ProductsItemType[]>([]);

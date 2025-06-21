@@ -1,5 +1,5 @@
 import { FormDataBasket } from "@/types/basket";
-import apiClient from "./apiClient";
+import apiClient from "../utils/apiClient";
 
 export const basketService = {
   postOrder: async (data: FormDataBasket) => {
