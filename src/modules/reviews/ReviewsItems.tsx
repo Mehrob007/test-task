@@ -34,13 +34,5 @@ export default function ReviewsItems() {
     return <Error message={error} />;
   }
 
-  return (
-    <div className="reviews-items">
-      {Array.isArray(data)
-        ? data.map((item, i) => (
-            <ReviewsItem item={item} index={i} key={i} />
-          ))
-        : ""}
-    </div>
-  );
+  return ""
 }
